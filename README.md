@@ -97,9 +97,9 @@ Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 
 | Martin Scorsese | 7 |
 
 ### Geographic Scope
-- **Total unique countries:** 93
-- **Total unique languages:** 68
-- Most represented: USA (190+), Japan (70), France (43)
+- **Total unique countries:** 37
+- **Total unique languages:** 38
+- Most represented: USA (120), Japan (70), France (43), UK (30), Italy (27)
 
 ---
 
@@ -107,15 +107,15 @@ Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 
 
 | Visual | Fields Used |
 |---|---|
-| KPI — Total Films | `Position Ranking` (COUNT) |
+| KPI — Total Films | `Title` (COUNT) |
 | KPI — Total Directors | `Director` (DISTINCTCOUNT) |
-| KPI — Total Countries | `Country of origin` (DISTINCTCOUNT) |
+| KPI — Total Countries | `Country (Modern)` (DISTINCTCOUNT) |
 | KPI — Average Rating | `Average rating` (AVERAGE) |
-| Bar chart — Films by country | `Country of origin`, COUNT |
+| Bar chart — Films by country | `Country (Modern)`, COUNT |
 | Bar chart — Films by decade | `Decade`, COUNT |
 | Bar chart — Films by director | `Director`, COUNT |
 | Bar chart — Films by genre | `Genres`, COUNT |
-| Ranking table | All columns |
+| Ranking table | `Ranking`, `Title`, `Director`, `Country`, `Genres`, `Rating` |
 
 **Slicers/Filters:**
 - Director
