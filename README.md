@@ -25,14 +25,29 @@ Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 
 | Column | Type | Description | Example |
 |---|---|---|---|
 | `Position Ranking` | Integer | Position in the Top 500 list (1 = highest rated) | `1` |
-| `Title` | Text | Full official film title | `Harakiri` |
-| `Director` | Text | Film's director(s) | `Masaki Kobayashi` |
-| `Release Year` | Integer | Year the film was released | `1962` |
+| `Title` | Text | Full official film title | `2001: A Space Odyssey` |
+| `Director` | Text | Film's director(s) | `Stanley Kubrick` |
+| `Release Year` | Integer | Year the film was released | `1968` |
 | `Decade` | Text | Decade of release (pre-aggregated) | `1960s` |
-| `Country of origin` | Text | Country or countries of production | `Japan` |
-| `Language` | Text | Primary language(s) of the film | `Japanese` |
-| `Genres` | Text | Genre classification (may be compound) | `Drama` |
-| `Average rating` | Float | Average community rating (scale 1.00–5.00) | `4.41` |
+| `Country of origin` | Text | Country or countries of production | `USA` |
+| `Country of origin (Modern)` | Text | Current country or countries of production (e.g. Russia for films originally made in the USSR | `Japan` |
+| `Language` | Text | Primary language(s) of the film | `English` |
+| `Genres` | Text | Genre classification (may be compound) | `Sciente Fiction, Drama` |
+| `Average rating` | Float | Average community rating (scale 1.00–5.00) | `4.38` |
+
+---
+## A Note on the Ranking System
+
+The rankings in this dataset follow RateYourMusic's **weighted average system**, 
+not a simple arithmetic mean. This means a film with a lower average rating can 
+rank above one with a higher rating if it has significantly more votes.
+
+For example, **2001: A Space Odyssey** (4.36 avg / ~17k ratings) ranks #1 above 
+**Harakiri** (4.40 avg / ~5k ratings) because the higher volume of votes makes 
+its score statistically more reliable and representative of the broader community.
+
+This is consistent with Bayesian average methods used by platforms like IMDb, 
+where scores are weighted toward the global mean when the number of ratings is low.
 
 ---
 
@@ -111,11 +126,12 @@ Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 
 | KPI — Total Directors | `Director` (DISTINCTCOUNT) |
 | KPI — Total Countries | `Country (Modern)` (DISTINCTCOUNT) |
 | KPI — Average Rating | `Average rating` (AVERAGE) |
-| Bar chart — Films by country | `Country (Modern)`, COUNT |
-| Bar chart — Films by decade | `Decade`, COUNT |
-| Bar chart — Films by director | `Director`, COUNT |
-| Bar chart — Films by genre | `Genres`, COUNT |
-| Ranking table | `Ranking`, `Title`, `Director`, `Country`, `Genres`, `Rating` |
+| KPI — Top Film | Top Film (DAX Measure) |
+| Bar chart — Total films by country of origin | X-Axis `Title` (COUNT), Y-Axis `Country (Modern)` |
+| Column chart — Total films by decade | X-Axis `Title` (COUNT), Y-Axis `Decade` |
+| Bar chart — Total films by director | X-Axis `Title` (COUNT), Y-Axis `Director` |
+| Bar chart — Total films by genre | X-Axis `Title` (COUNT), Y-Axis `Genres` |
+| Ranking table | `Ranking`, `Title`, `Director`, `Country of origin`, `Genres`, `Rating` |
 
 **Slicers/Filters:**
 - Director
@@ -127,27 +143,18 @@ Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 
 ---
 
 ## DAX Measures Used
+### Top Film (dynamic KPI)
+Returns the title of the highest-ranked film within the current filter contex
 
-```dax
-Total Films = COUNTROWS(Movies)
-
-Total Directors = DISTINCTCOUNT(Movies[Director])
-
-Total Countries = DISTINCTCOUNT(Movies[Country of origin])
-
-Average Rating = AVERAGE(Movies[Average rating])
-
-Films by Decade = 
-CALCULATE(
-    COUNTROWS(Movies),
-    ALLEXCEPT(Movies, Movies[Decade])
-)
-
-Top Director by Count = 
-FIRSTNONBLANK(
-    TOPN(1, ALL(Movies[Director]), CALCULATE(COUNTROWS(Movies))),
-    1
-)
+```
+DAX
+Top Film = 
+VAR TopRank = MIN(Films[Position Ranking])
+RETURN
+    CALCULATE(
+        FIRSTNONBLANK(Films[Title], 1),
+        Films[Position Ranking] = TopRank
+    )
 ```
 
 ---
