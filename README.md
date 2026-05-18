@@ -4,7 +4,7 @@
 
 **Top 500 Best Reviewed Films of All Time**  
 Source: [RateYourMusic.com](https://rateyourmusic.com) · Collected as of April 21, 2026
-
+![Dashboard Preview](assets/Dashboard%20Films%20Official.png)
 ---
 
 ## Dataset Overview
