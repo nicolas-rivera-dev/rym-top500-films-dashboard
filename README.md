@@ -1,5 +1,5 @@
 # rym-top500-films-dashboard
-
+Interactive Power BI dashboard analyzing the Top 500 best-reviewed films on RateYourMusic.com
 # Movies Dashboard — Dataset Documentation
 
 **Top 500 Best Reviewed Films of All Time**  
