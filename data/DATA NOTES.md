@@ -1,4 +1,4 @@
-## 📋 Data Sources & Collection Notes
+## Data Sources & Collection Notes
 
 ### Source
 - **Website:** [RateYourMusic.com](https://rateyourmusic.com/charts/top/film/all-time/separate:live,archival,soundtrack/)
