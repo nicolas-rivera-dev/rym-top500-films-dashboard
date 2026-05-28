@@ -63,7 +63,7 @@ where scores are weighted toward the global mean when the number of ratings is l
 | Maximum | 4.41 |
 | Std. Deviation | 0.12 |
 
-### Top 5 Highest Rated Films
+### Top 5 Highest Rated Films (without Weighted Average System)
 | Rank | Title | Director | Year | Country | Rating |
 |---|---|---|---|---|---|
 | 1 | Harakiri | Masaki Kobayashi | 1962 | Japan | 4.41 |
